@@ -1,5 +1,5 @@
 {
-  "name": "norma",
+  "name": "@jacobbubu/norma",
   "version": "2.0.2",
   "description": "A function argument organizer",
   "main": "norma.js",
@@ -16,6 +16,7 @@
     "type": "git",
     "url": "git://github.com/rjrodger/norma.git"
   },
+  "types": "./types/index.d.ts",
   "keywords": [
     "norma",
     "function",
@@ -41,7 +42,7 @@
     "uglify-js": "^3.7.1"
   },
   "dependencies": {
-    "eraro": "^2.0.0",
+    "eraro": "^2.1.0",
     "lodash.isarguments": "^3.1.0",
     "lodash.isdate": "^4.0.1",
     "lodash.isnan": "^3.0.2",
@@ -53,6 +54,10 @@
     "norma.js",
     "norma-parser.js",
     "norma-min.js",
-    "norma-min.js.map"
-  ]
+    "norma-min.js.map",
+    "types"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }

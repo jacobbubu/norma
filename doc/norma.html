@@ -32,7 +32,7 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-comment">/* Copyright (c) 2014-2015 Richard Rodger, MIT License */</span>
 <span class="hljs-comment">/* jshint node:true, asi:true, eqnull:true */</span>
-<span class="hljs-meta">"use strict"</span>;</pre></div></div>
+<span class="hljs-meta">'use strict'</span></pre></div></div>
             
         </li>
         
@@ -75,8 +75,13 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> _     = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lodash'</span>)
-<span class="hljs-keyword">var</span> error = <span class="hljs-built_in">require</span>(<span class="hljs-string">'eraro'</span>)({<span class="hljs-attr">package</span>:<span class="hljs-string">'norma'</span>})</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> _ = {}
+_.isNaN = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lodash.isnan'</span>)
+_.isRegExp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lodash.isregexp'</span>)
+_.isDate = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lodash.isdate'</span>)
+_.isArguments = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lodash.isarguments'</span>)
+
+<span class="hljs-keyword">var</span> error = <span class="hljs-built_in">require</span>(<span class="hljs-string">'eraro'</span>)({ <span class="hljs-attr">package</span>: <span class="hljs-string">'norma'</span> })</pre></div></div>
             
         </li>
         
@@ -107,8 +112,8 @@
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> defopts = {
-  <span class="hljs-attr">onfail</span>:<span class="hljs-string">'throw'</span>,
-  <span class="hljs-attr">desclen</span>:<span class="hljs-number">33</span>
+  <span class="hljs-attr">onfail</span>: <span class="hljs-string">'throw'</span>,
+  <span class="hljs-attr">desclen</span>: <span class="hljs-number">33</span>
 }</pre></div></div>
             
         </li>
@@ -139,13 +144,13 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compile</span>(<span class="hljs-params"> spec </span>) </span>{
-  <span class="hljs-keyword">if</span>( <span class="hljs-literal">null</span> == spec ) <span class="hljs-keyword">throw</span> error(<span class="hljs-string">'no_spec'</span>, <span class="hljs-string">'no argument specification'</span>);
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compile</span>(<span class="hljs-params">spec</span>) </span>{
+  <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> == spec) <span class="hljs-keyword">throw</span> error(<span class="hljs-string">'no_spec'</span>, <span class="hljs-string">'no argument specification'</span>)
 
   <span class="hljs-keyword">var</span> specdef = specmap[spec]
-  <span class="hljs-keyword">if</span>( <span class="hljs-literal">null</span> != specdef ) <span class="hljs-keyword">return</span> specdef;
+  <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> != specdef) <span class="hljs-keyword">return</span> specdef
 
-  <span class="hljs-keyword">var</span> respec = parse_spec( spec )</pre></div></div>
+  <span class="hljs-keyword">var</span> respec = parse_spec(spec)</pre></div></div>
             
         </li>
         
@@ -161,20 +166,20 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> reindex = []
-  <span class="hljs-keyword">var</span> index   = <span class="hljs-number">1</span>
+  <span class="hljs-keyword">var</span> index = <span class="hljs-number">1</span>
   <span class="hljs-keyword">var</span> restr = [<span class="hljs-string">'^'</span>]
   <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>
-  respec.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">entry</span>)</span>{
+  respec.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">entry</span>) </span>{
     restr.push(<span class="hljs-string">'('</span>)
 
-    <span class="hljs-keyword">if</span>( entry.type.or &amp;&amp; <span class="hljs-number">0</span> &lt; entry.type.or.length ) {
+    <span class="hljs-keyword">if</span> (entry.type.or &amp;&amp; <span class="hljs-number">0</span> &lt; entry.type.or.length) {
       <span class="hljs-keyword">var</span> count = <span class="hljs-number">1</span>
 
       restr.push(<span class="hljs-string">'('</span>)
       restr.push(entry.type.mark)
       restr.push(<span class="hljs-string">')'</span>)
 
-      entry.type.or.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">or</span>)</span>{
+      entry.type.or.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">or</span>) </span>{
         restr.push(<span class="hljs-string">'|'</span>)
         restr.push(<span class="hljs-string">'('</span>)
         restr.push(or[<span class="hljs-number">1</span>])
@@ -182,24 +187,21 @@
         restr.push(<span class="hljs-string">')'</span>)
       })
 
-      <span class="hljs-keyword">if</span>( <span class="hljs-string">'?'</span> == entry.mod ) {
+      <span class="hljs-keyword">if</span> (<span class="hljs-string">'?'</span> == entry.mod) {
         restr.push(<span class="hljs-string">'|[UNA]?'</span>)
       }
 
-      reindex[i]={<span class="hljs-attr">index</span>:index}
+      reindex[i] = { <span class="hljs-attr">index</span>: index }
       index += count
-    }
-
-    <span class="hljs-keyword">else</span> {
-      <span class="hljs-keyword">if</span>( <span class="hljs-string">'?'</span> == entry.mod ) {
-        restr.push(<span class="hljs-string">'[UNA'</span>+entry.type.mark+<span class="hljs-string">']?'</span>)
-      }
-      <span class="hljs-keyword">else</span> {
-        restr.push(entry.type.mark);
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">if</span> (<span class="hljs-string">'?'</span> == entry.mod) {
+        restr.push(<span class="hljs-string">'[UNA'</span> + entry.type.mark + <span class="hljs-string">']?'</span>)
+      } <span class="hljs-keyword">else</span> {
+        restr.push(entry.type.mark)
         restr.push(entry.mod || <span class="hljs-string">''</span>)
       }
 
-      reindex[i]={<span class="hljs-attr">index</span>:index}
+      reindex[i] = { <span class="hljs-attr">index</span>: index }
     }
 
     reindex[i].mod = entry.mod
@@ -210,19 +212,30 @@
   restr.push(<span class="hljs-string">'$'</span>)
 
   <span class="hljs-keyword">var</span> re = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(restr.join(<span class="hljs-string">''</span>))
-  specdef = specmap[spec] = {<span class="hljs-attr">re</span>:re,<span class="hljs-attr">spec</span>:spec,<span class="hljs-attr">respec</span>:respec,<span class="hljs-attr">reindex</span>:reindex}
+  specdef = specmap[spec] = {
+    <span class="hljs-attr">re</span>: re,
+    <span class="hljs-attr">spec</span>: spec,
+    <span class="hljs-attr">respec</span>: respec,
+    <span class="hljs-attr">reindex</span>: reindex
+  }
 
-  <span class="hljs-keyword">return</span> specdef;
+  <span class="hljs-keyword">return</span> specdef
 }
 
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parse_spec</span>(<span class="hljs-params"> spec </span>) </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parse_spec</span>(<span class="hljs-params">spec</span>) </span>{
   <span class="hljs-keyword">try</span> {
-    <span class="hljs-keyword">return</span> parser.parse( spec )
-  }
-  <span class="hljs-keyword">catch</span>(e) {
-    <span class="hljs-keyword">throw</span> error(<span class="hljs-string">'parse'</span>, e.message+<span class="hljs-string">'; spec:"'</span>+spec+
-                <span class="hljs-string">'", col:'</span>+e.location.start.column+<span class="hljs-string">', line:'</span>+e.location.start.line)
+    <span class="hljs-keyword">return</span> parser.parse(spec)
+  } <span class="hljs-keyword">catch</span> (e) {
+    <span class="hljs-keyword">throw</span> error(
+      <span class="hljs-string">'parse'</span>,
+      e.message +
+        <span class="hljs-string">'; spec:"'</span> +
+        spec +
+        <span class="hljs-string">'", col:'</span> +
+        e.location.start.column +
+        <span class="hljs-string">', line:'</span> +
+        e.location.start.line
+    )
   }
 }</pre></div></div>
             
@@ -239,9 +252,9 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">processargs</span>(<span class="hljs-params"> specdef, options, rawargs </span>) </span>{
-  <span class="hljs-keyword">var</span> args = <span class="hljs-built_in">Array</span>.prototype.slice.call(rawargs||[])
-  <span class="hljs-keyword">var</span> argdesc = describe( args )</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">processargs</span>(<span class="hljs-params">specdef, options, rawargs</span>) </span>{
+  <span class="hljs-keyword">var</span> args = <span class="hljs-built_in">Array</span>.prototype.slice.call(rawargs || [])
+  <span class="hljs-keyword">var</span> argdesc = describe(args)</pre></div></div>
             
         </li>
         
@@ -257,15 +270,19 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> outslots = specdef.re.exec(argdesc)
-  <span class="hljs-keyword">if</span>( !outslots ) {
-    <span class="hljs-keyword">if</span>( <span class="hljs-string">'throw'</span> == options.onfail ) {
+  <span class="hljs-keyword">if</span> (!outslots) {
+    <span class="hljs-keyword">if</span> (<span class="hljs-string">'throw'</span> == options.onfail) {
       <span class="hljs-keyword">throw</span> error(
-        <span class="hljs-string">'invalid_arguments'</span>, 
-        <span class="hljs-string">'invalid arguments; expected: "'</span>+specdef.spec+
-          <span class="hljs-string">'", was: ['</span>+argdesc+<span class="hljs-string">']; values: '</span>+descargs(args,options),
-        {<span class="hljs-attr">args</span>:args,<span class="hljs-attr">specdef</span>:specdef,<span class="hljs-attr">options</span>:options})
-    }
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+        <span class="hljs-string">'invalid_arguments'</span>,
+        <span class="hljs-string">'invalid arguments; expected: "'</span> +
+          specdef.spec +
+          <span class="hljs-string">'", was: ['</span> +
+          argdesc +
+          <span class="hljs-string">']; values: '</span> +
+          descargs(args, options),
+        { <span class="hljs-attr">args</span>: args, <span class="hljs-attr">specdef</span>: specdef, <span class="hljs-attr">options</span>: options }
+      )
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
   }</pre></div></div>
             
         </li>
@@ -283,67 +300,69 @@ Need to do some index housekeeping as regexp has additional groups.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> out = specdef.respec.object ? {} : []
-  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>, k = <span class="hljs-number">0</span>; i &lt; specdef.reindex.length; i++ ) {
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>, k = <span class="hljs-number">0</span>; i &lt; specdef.reindex.length; i++) {
     <span class="hljs-keyword">var</span> indexspec = specdef.reindex[i]
     <span class="hljs-keyword">var</span> val = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>
 
-    <span class="hljs-keyword">if</span>( !specdef.respec.object ) {
+    <span class="hljs-keyword">if</span> (!specdef.respec.object) {
       out[k] = val
     }
-    
-    <span class="hljs-keyword">if</span>( <span class="hljs-literal">null</span> != indexspec.index) {
+
+    <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> != indexspec.index) {
       <span class="hljs-keyword">var</span> m = outslots[indexspec.index]
-      <span class="hljs-keyword">var</span> found = (<span class="hljs-string">''</span> !== m)
-      <span class="hljs-keyword">if</span>( found ) {
+      <span class="hljs-keyword">var</span> found = <span class="hljs-string">''</span> !== m
+      <span class="hljs-keyword">if</span> (found) {
         <span class="hljs-keyword">var</span> iname = specdef.respec[i].name
         <span class="hljs-keyword">var</span> istar = <span class="hljs-string">'*'</span> === specdef.respec[i].mod
         <span class="hljs-keyword">var</span> iplus = <span class="hljs-string">'+'</span> === specdef.respec[i].mod
 
-        <span class="hljs-keyword">if</span>( <span class="hljs-number">0</span> === m.length &amp;&amp; iplus ) {
+        <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> === m.length &amp;&amp; iplus) {
           <span class="hljs-keyword">throw</span> error(
-            <span class="hljs-string">'invalid_arguments'</span>, 
-            <span class="hljs-string">'invalid arguments; expected: "'</span>+specdef.spec+
-              <span class="hljs-string">'", was: ['</span>+argdesc+<span class="hljs-string">']; values: '</span>+descargs(args,options),
-            {<span class="hljs-attr">args</span>:args,<span class="hljs-attr">specdef</span>:specdef,<span class="hljs-attr">options</span>:options})
+            <span class="hljs-string">'invalid_arguments'</span>,
+            <span class="hljs-string">'invalid arguments; expected: "'</span> +
+              specdef.spec +
+              <span class="hljs-string">'", was: ['</span> +
+              argdesc +
+              <span class="hljs-string">']; values: '</span> +
+              descargs(args, options),
+            { <span class="hljs-attr">args</span>: args, <span class="hljs-attr">specdef</span>: specdef, <span class="hljs-attr">options</span>: options }
+          )
         }
-        <span class="hljs-keyword">if</span>( <span class="hljs-number">1</span> == m.length ) {
+        <span class="hljs-keyword">if</span> (<span class="hljs-number">1</span> == m.length) {
           val = args[j]
           j++
 
-          <span class="hljs-keyword">if</span>( !specdef.respec.object ) {
+          <span class="hljs-keyword">if</span> (!specdef.respec.object) {
             out[k] = val
           }
 
-          <span class="hljs-keyword">if</span>( <span class="hljs-literal">null</span> != iname ) {
-            <span class="hljs-keyword">if</span>( istar || iplus ) {
-              (out[iname] = (out[iname] || [])).push(val)
-            }
-            <span class="hljs-keyword">else</span> {
+          <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> != iname) {
+            <span class="hljs-keyword">if</span> (istar || iplus) {
+              ;(out[iname] = out[iname] || []).push(val)
+            } <span class="hljs-keyword">else</span> {
               out[specdef.respec[i].name] = val
             }
           }
 
           k++
-        }
-        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( <span class="hljs-number">1</span> &lt; m.length ) {
-          <span class="hljs-keyword">for</span>( <span class="hljs-keyword">var</span> mI = <span class="hljs-number">0</span>; mI &lt; m.length; mI++ ) {
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-number">1</span> &lt; m.length) {
+          <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> mI = <span class="hljs-number">0</span>; mI &lt; m.length; mI++) {
             val = args[j]
             j++
 
-            <span class="hljs-keyword">if</span>( !specdef.respec.object ) {
+            <span class="hljs-keyword">if</span> (!specdef.respec.object) {
               out[k] = val
             }
 
-            <span class="hljs-keyword">if</span>( <span class="hljs-literal">null</span> != iname ) {
-              (out[iname] = (out[iname] || [])).push(val)
+            <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> != iname) {
+              ;(out[iname] = out[iname] || []).push(val)
             }
 
             k++
           }
         }
-      }
-      <span class="hljs-keyword">else</span> {
-        <span class="hljs-keyword">if</span>( !specdef.respec.object ) {
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">if</span> (!specdef.respec.object) {
           out[k] = <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>
         }
         k++
@@ -351,7 +370,7 @@ Need to do some index housekeeping as regexp has additional groups.</p>
     }
   }
 
-  <span class="hljs-keyword">return</span> out;
+  <span class="hljs-keyword">return</span> out
 }</pre></div></div>
             
         </li>
@@ -371,9 +390,8 @@ Need to do some index housekeeping as regexp has additional groups.</p>
             <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">describe</span>(<span class="hljs-params">args</span>) </span>{
   <span class="hljs-keyword">var</span> desc = []
 
-  args.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">arg</span>)</span>{
-
-    <span class="hljs-keyword">if</span>( _.isString(arg) ) {
+  args.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">arg</span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-string">'string'</span> === <span class="hljs-keyword">typeof</span> arg) {
       desc.push(<span class="hljs-string">'s'</span>)
     }</pre></div></div>
             
@@ -390,34 +408,25 @@ Need to do some index housekeeping as regexp has additional groups.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( (!<span class="hljs-built_in">isNaN</span>(arg) &amp;&amp; ((arg | <span class="hljs-number">0</span>) === <span class="hljs-built_in">parseFloat</span>(arg))) ) {
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">isNaN</span>(arg) &amp;&amp; (arg | <span class="hljs-number">0</span>) === <span class="hljs-built_in">parseFloat</span>(arg)) {
       desc.push(<span class="hljs-string">'i'</span>)
-    }
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( _.isNaN(arg) ) {
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (_.isNaN(arg)) {
       desc.push(<span class="hljs-string">'A'</span>)
-    }
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( <span class="hljs-literal">Infinity</span> === arg ) {
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-literal">Infinity</span> === arg) {
       desc.push(<span class="hljs-string">'Y'</span>)
-    }
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( _.isNumber(arg) ) {
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-string">'number'</span> === <span class="hljs-keyword">typeof</span> arg) {
       desc.push(<span class="hljs-string">'n'</span>)
-    }
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( _.isBoolean(arg) ) {
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-string">'boolean'</span> === <span class="hljs-keyword">typeof</span> arg) {
       desc.push(<span class="hljs-string">'b'</span>)
-    }
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( _.isFunction(arg) ) {
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-string">'function'</span> === <span class="hljs-keyword">typeof</span> arg) {
       desc.push(<span class="hljs-string">'f'</span>)
-    }
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( _.isArray(arg) ) {
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(arg)) {
       desc.push(<span class="hljs-string">'a'</span>)
-    }
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( _.isRegExp(arg) ) {
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (_.isRegExp(arg)) {
       desc.push(<span class="hljs-string">'r'</span>)
-    }
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( _.isDate(arg) ) {
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (_.isDate(arg)) {
       desc.push(<span class="hljs-string">'d'</span>)
-    }
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( _.isArguments(arg) ) {
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (_.isArguments(arg)) {
       desc.push(<span class="hljs-string">'g'</span>)
     }</pre></div></div>
             
@@ -434,17 +443,13 @@ Need to do some index housekeeping as regexp has additional groups.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( util.isError(arg) ) {
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (util.isError(arg)) {
       desc.push(<span class="hljs-string">'e'</span>)
-    }
-
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( _.isNull(arg) ) {
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> === arg) {
       desc.push(<span class="hljs-string">'N'</span>)
-    }
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( _.isUndefined(arg) ) {
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-literal">undefined</span> === arg) {
       desc.push(<span class="hljs-string">'U'</span>)
-    }
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( _.isObject(arg) ) {
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-string">'object'</span> === <span class="hljs-keyword">typeof</span> arg) {
       desc.push(<span class="hljs-string">'o'</span>)
     }</pre></div></div>
             
@@ -483,11 +488,11 @@ Need to do some index housekeeping as regexp has additional groups.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">descargs</span>(<span class="hljs-params"> args, options </span>) </span>{
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">descargs</span>(<span class="hljs-params">args, options</span>) </span>{
   <span class="hljs-keyword">var</span> desc = []
-  
-  _.each(args,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">arg</span>)</span>{
-    <span class="hljs-keyword">var</span> str = util.inspect(arg).substring(<span class="hljs-number">0</span>,options.desclen)
+
+  args.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">arg</span>) </span>{
+    <span class="hljs-keyword">var</span> str = util.inspect(arg).substring(<span class="hljs-number">0</span>, options.desclen)
     desc.push(str)
   })
 
@@ -508,22 +513,21 @@ Need to do some index housekeeping as regexp has additional groups.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handle</span>(<span class="hljs-params"> specdef, options, rawargs </span>) </span>{
-  <span class="hljs-keyword">if</span>( _.isArguments(options) || _.isArray(options ) ) {
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handle</span>(<span class="hljs-params">specdef, options, rawargs</span>) </span>{
+  <span class="hljs-keyword">if</span> (_.isArguments(options) || <span class="hljs-built_in">Array</span>.isArray(options)) {
     rawargs = options
     options = <span class="hljs-literal">null</span>
   }
-  options = <span class="hljs-literal">null</span> == options ? defopts : _.extend({},defopts,options)
+  options = <span class="hljs-literal">null</span> == options ? defopts : <span class="hljs-built_in">Object</span>.assign({}, defopts, options)
 
-  <span class="hljs-keyword">if</span>( <span class="hljs-literal">null</span> == rawargs ) {
+  <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> == rawargs) {
     <span class="hljs-keyword">throw</span> error(
-      <span class="hljs-string">'init'</span>, 
-      <span class="hljs-string">'no arguments variable; expected norma( "...", arguments ), '</span>+
+      <span class="hljs-string">'init'</span>,
+      <span class="hljs-string">'no arguments variable; expected norma( "...", arguments ), '</span> +
         <span class="hljs-string">'or &lt;compiled&gt;( arguments )'</span>,
-      {<span class="hljs-attr">arguments</span>:<span class="hljs-built_in">arguments</span>}
+      { <span class="hljs-attr">arguments</span>: <span class="hljs-built_in">arguments</span> }
     )
-  }
-  <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> processargs(specdef, options, rawargs)
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> processargs(specdef, options, rawargs)
 }</pre></div></div>
             
         </li>
@@ -539,9 +543,9 @@ Need to do some index housekeeping as regexp has additional groups.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> spec, options, rawargs </span>) </span>{
-  <span class="hljs-keyword">var</span> specdef = compile( spec )
-  <span class="hljs-keyword">return</span> handle( specdef, options, rawargs )
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">spec, options, rawargs</span>) </span>{
+  <span class="hljs-keyword">var</span> specdef = compile(spec)
+  <span class="hljs-keyword">return</span> handle(specdef, options, rawargs)
 }</pre></div></div>
             
         </li>
@@ -558,14 +562,14 @@ Need to do some index housekeeping as regexp has additional groups.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports.compile = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> spec </span>) </span>{
-  <span class="hljs-keyword">var</span> specdef = compile( spec )
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports.compile = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">spec</span>) </span>{
+  <span class="hljs-keyword">var</span> specdef = compile(spec)
 
-  <span class="hljs-keyword">var</span> out = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> options, rawargs </span>) </span>{
-    <span class="hljs-keyword">return</span> handle( specdef, options, rawargs )
+  <span class="hljs-keyword">var</span> out = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">options, rawargs</span>) </span>{
+    <span class="hljs-keyword">return</span> handle(specdef, options, rawargs)
   }
   out.toString = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">return</span> util.inspect({<span class="hljs-attr">spec</span>:specdef.spec, <span class="hljs-attr">re</span>:<span class="hljs-string">''</span>+specdef.re})
+    <span class="hljs-keyword">return</span> util.inspect({ <span class="hljs-attr">spec</span>: specdef.spec, <span class="hljs-attr">re</span>: <span class="hljs-string">''</span> + specdef.re })
   }
   <span class="hljs-keyword">return</span> out
 }</pre></div></div>
