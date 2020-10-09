@@ -22,7 +22,7 @@ var parser = require('./norma-parser')
 // Default options.
 var defopts = {
   onfail: 'throw',
-  desclen: 33
+  desclen: 33,
 }
 
 // Cache of previously seen type specs.
@@ -42,7 +42,7 @@ function compile(spec) {
   var index = 1
   var restr = ['^']
   var i = 0
-  respec.forEach(function(entry) {
+  respec.forEach(function (entry) {
     restr.push('(')
 
     if (entry.type.or && 0 < entry.type.or.length) {
@@ -52,7 +52,7 @@ function compile(spec) {
       restr.push(entry.type.mark)
       restr.push(')')
 
-      entry.type.or.forEach(function(or) {
+      entry.type.or.forEach(function (or) {
         restr.push('|')
         restr.push('(')
         restr.push(or[1])
@@ -89,7 +89,7 @@ function compile(spec) {
     re: re,
     spec: spec,
     respec: respec,
-    reindex: reindex
+    reindex: reindex,
   }
 
   return specdef
@@ -215,7 +215,7 @@ function processargs(specdef, options, rawargs) {
 function describe(args) {
   var desc = []
 
-  args.forEach(function(arg) {
+  args.forEach(function (arg) {
     if ('string' === typeof arg) {
       desc.push('s')
     }
@@ -268,7 +268,7 @@ function describe(args) {
 function descargs(args, options) {
   var desc = []
 
-  args.forEach(function(arg) {
+  args.forEach(function (arg) {
     var str = util.inspect(arg).substring(0, options.desclen)
     desc.push(str)
   })
@@ -296,20 +296,20 @@ function handle(specdef, options, rawargs) {
 }
 
 // #### Primary API
-module.exports = function(spec, options, rawargs) {
+module.exports = function (spec, options, rawargs) {
   var specdef = compile(spec)
   return handle(specdef, options, rawargs)
 }
 
 // #### Compile spec for later use
 // _toString_ shows you the constructed regexp (for debugging).
-module.exports.compile = function(spec) {
+module.exports.compile = function (spec) {
   var specdef = compile(spec)
 
-  var out = function(options, rawargs) {
+  var out = function (options, rawargs) {
     return handle(specdef, options, rawargs)
   }
-  out.toString = function() {
+  out.toString = function () {
     return util.inspect({ spec: specdef.spec, re: '' + specdef.re })
   }
   return out

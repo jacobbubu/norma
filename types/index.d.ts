@@ -1,3 +1,6 @@
 declare namespace norma {}
-declare function norma(exp: string, argv: any[]): any[];
+declare function norma(
+  exp: string,
+  argv: IArguments | ReadonlyArray<any>
+): any[];
 export = norma;
